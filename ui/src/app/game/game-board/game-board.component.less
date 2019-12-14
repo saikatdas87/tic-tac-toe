@@ -1,0 +1,56 @@
+.host {
+
+  .uit-game-board-card {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+}
+
+.uit-game-board {
+  width: 302px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 100px 100px 100px;
+  grid-template-rows: 100px 100px 100px;
+  font-size: 50px;
+  background-color: darkgray;
+  grid-gap: 1px;
+}
+
+.uit-game-board.uit-game-board-locked {
+  opacity: .7;
+  pointer-events: none;
+}
+
+.uit-game-board-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  color: darkgray;
+  cursor: pointer;
+}
+
+.uit-game-board .uit-game-board-box.checked {
+  cursor: default;
+}
+
+.uit-game-board .uit-game-board-box.winner {
+  background-color: #90EE90;
+  color: black;
+}
+
+.uit-game-error {
+  background-color: #F8D7DA;
+  max-width: 70%;
+  margin: 0 auto;
+}
+
+.uit-game-winner {
+  background-color: #D4EDDA;
+  max-width: 35%;
+  margin: 20px auto;
+}

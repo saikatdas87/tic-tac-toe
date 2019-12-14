@@ -1,0 +1,44 @@
+<div class="uit-game-board-card">
+  <mat-card class="mat-elevation-z8" style="width: 50%;margin: 0 auto;">
+    <mat-card-content>
+
+      <div *ngIf="gameError" class="uit-game-error">
+        Something went wrong !!! Please try new game
+      </div>
+
+      <h3 *ngIf="!gameOver">
+        Active Player : {{currentPlayer.name}}
+      </h3>
+
+      <h2 *ngIf="gameOver">
+        This Game is over!!
+      </h2>
+
+      <div class="uit-game-board" [class.uit-game-board-locked]="boardLocked || gameOver">
+        <div *ngFor="let box of board"
+             class="uit-game-board-box"
+             id="uit-game-board-box-{{box.position}}"
+             [class.checked]="box.value != ''"
+             [class.winner]="box.winner"
+             (click)="click(this.box)">
+          {{ box.value }}
+        </div>
+      </div>
+
+      <h3 *ngIf="gameOver && winner && winner.name !== 'Draw'" class="uit-game-winner">
+        Winner : {{currentPlayer.name}}
+      </h3>
+
+      <h3 *ngIf="gameOver && winner && winner.name === 'Draw'" id="uit-game-draw-message">
+        The game is a DRAW !! Try new game
+      </h3>
+
+      <button mat-raised-button color="warn" (click)="reset()" style="margin-top: 40px" id="uit-board-game-reset">New Game</button>
+
+    </mat-card-content>
+
+  </mat-card>
+</div>
+
+
+
