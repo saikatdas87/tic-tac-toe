@@ -139,6 +139,28 @@ describe('GameBoardComponent', () => {
     expect(component.gameOver).toBe(true);
   });
 
+  it('Displays drawn game on click', () => {
+    const board = [new GameBox("O", 1),
+      new GameBox("X", 2),
+      new GameBox("X", 3),
+      new GameBox("X", 4),
+      new GameBox("X", 5),
+      new GameBox("O", 6),
+      new GameBox("O", 7),
+      new GameBox("O", 8),
+      new GameBox("", 9)];
+    spyOn(service, 'getBoard').and.returnValue(of(board));
+    spyOn(service, 'updateBoard').and.returnValue(of(board.map(b => {return b.position === 9 ? new GameBox('X', 9): b})));
+
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+
+    component.click(new GameBox('', 9));
+
+    expect(component.gameOver).toBe(true);
+    expect(component.winner).toBe(component.DRAW);
+  });
+
   it('Detects game win on load', () => {
     const board = [new GameBox("X", 1),
       new GameBox("X", 2),
