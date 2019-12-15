@@ -190,5 +190,5 @@ GET        /*file        controllers.FrontendController.assetOrDefault(file)
 This software is licensed under the MIT license
 
 [license-badge]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
-[license]: https://github.com/yohangz/scala-play-angular-seed/blob/master/LICENSE
+[license]: https://github.com/saikatdas87/tic-tac-toe/blob/master/LICENSE
 
