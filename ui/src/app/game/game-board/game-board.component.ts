@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {GameService} from "../services/game.service";
 
-export class GameBoard {
+export class GameBox {
   value: string = '';
   readonly position: number = 0;
   winner?: boolean;
@@ -34,7 +34,7 @@ export class GameBoardComponent implements OnInit {
   PLAYER_O = new Player('Player 2', 'O');
   DRAW = new Player('Draw', '');
 
-  board: GameBoard[] = [];
+  board: GameBox[] = [];
   currentPlayer = this.PLAYER_X;
   winner: any;
   gameOver: boolean | undefined;
@@ -54,21 +54,20 @@ export class GameBoardComponent implements OnInit {
     });
   }
 
-  click(square: GameBoard) {
-    if (square.value === '' && !this.gameOver) {
-      square.value = this.currentPlayer.symbol;
-      this.gameService.updateBoard(square).subscribe((res) => {
+  click(box: GameBox): void {
+    if (box.value === '' && !this.gameOver) {
+      box.value = this.currentPlayer.symbol;
+      this.gameService.updateBoard(box).subscribe((res) => {
         this.board = res;
         this.completeMove(this.currentPlayer);
       }, error => {
         this.boardLocked = true;
         this.gameError = true;
       });
-
     }
   }
 
-  completeMove(player: Player) {
+  completeMove(player: Player): void {
     if (this.isWinner(player.symbol))
       this.showGameOver(player);
     else if (!this.availableSquaresExist())
@@ -78,7 +77,7 @@ export class GameBoardComponent implements OnInit {
     }
   }
 
-  showGameOverIfAlreadyWon() {
+  showGameOverIfAlreadyWon(): void {
     if (this.isWinner(this.PLAYER_X.symbol)) {
       this.showGameOver(this.PLAYER_X);
     } else if (this.isWinner(this.PLAYER_O.symbol)) {
@@ -92,7 +91,7 @@ export class GameBoardComponent implements OnInit {
     return this.board.filter(s => s.value == '').length > 0;
   }
 
-  showGameOver(winner: Player) {
+  showGameOver(winner: Player): void {
     this.gameOver = true;
     this.winner = winner;
 
@@ -129,8 +128,8 @@ export class GameBoardComponent implements OnInit {
     return false;
   }
 
-  initializeGame(gameBoards: GameBoard[]) {
-    this.board = gameBoards;
+  initializeGame(gameBoxes: GameBox[]): void {
+    this.board = gameBoxes;
     this.gameOver = false;
     this.boardLocked = false;
     this.gameError = false;

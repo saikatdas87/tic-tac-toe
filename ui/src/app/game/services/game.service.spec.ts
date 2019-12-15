@@ -2,7 +2,7 @@ import {TestBed} from '@angular/core/testing';
 
 import {GameService} from './game.service';
 import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
-import {GameBoard} from "../game-board/game-board.component";
+import {GameBox} from "../game-board/game-board.component";
 
 describe('GameService', () => {
   let httpClient: HttpTestingController;
@@ -21,7 +21,7 @@ describe('GameService', () => {
   describe('getBoard', () => {
 
     it('should retrieve GameBoards', () => {
-      const expected = [new GameBoard('X', 1)];
+      const expected = [new GameBox('X', 1)];
       service.getBoard().subscribe(res => {
         expect(res).toBe(expected)
       }, () => {
@@ -53,8 +53,8 @@ describe('GameService', () => {
   describe('updateBoard', () => {
 
     it('should update board',  () => {
-      const expected = [new GameBoard('X', 1)];
-      service.updateBoard(new GameBoard('X', 1)).subscribe(res => {
+      const expected = [new GameBox('X', 1)];
+      service.updateBoard(new GameBox('X', 1)).subscribe(res => {
         expect(res).toBe(expected)
       }, () => {
         throw(Error('should not be reached'));
@@ -68,7 +68,7 @@ describe('GameService', () => {
     it('Should return error if req fails', () => {
       const errorText = 'Server error';
       const errorCode = 500;
-      service.updateBoard(new GameBoard('X', 1)).subscribe(() => {
+      service.updateBoard(new GameBox('X', 1)).subscribe(() => {
         throw(Error('should not be reached'));
       }, error => {
         expect(error.status).toBe(errorCode);
@@ -85,7 +85,7 @@ describe('GameService', () => {
   describe('reset', () => {
 
     it('should reset board',  () => {
-      const expected = [new GameBoard('X', 1)];
+      const expected = [new GameBox('X', 1)];
       service.reset().subscribe(res => {
         expect(res).toBe(expected)
       }, () => {

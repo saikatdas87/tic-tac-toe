@@ -1,6 +1,6 @@
 import {async, ComponentFixture, TestBed, tick} from '@angular/core/testing';
 
-import {GameBoard, GameBoardComponent} from './game-board.component';
+import {GameBox, GameBoardComponent} from './game-board.component';
 import {GameService} from "../services/game.service";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {MatButtonModule} from "@angular/material/button";
@@ -11,15 +11,15 @@ describe('GameBoardComponent', () => {
   let component: GameBoardComponent;
   let fixture: ComponentFixture<GameBoardComponent>;
   let service: GameService;
-  const initialBoard = [new GameBoard("", 1),
-                        new GameBoard("", 2),
-                        new GameBoard("", 3),
-                        new GameBoard("", 4),
-                        new GameBoard("", 5),
-                        new GameBoard("", 6),
-                        new GameBoard("", 7),
-                        new GameBoard("", 8),
-                        new GameBoard("", 9)];
+  const initialBoard = [new GameBox("", 1),
+                        new GameBox("", 2),
+                        new GameBox("", 3),
+                        new GameBox("", 4),
+                        new GameBox("", 5),
+                        new GameBox("", 6),
+                        new GameBox("", 7),
+                        new GameBox("", 8),
+                        new GameBox("", 9)];
 
   beforeEach(async(() => {
 
@@ -53,7 +53,7 @@ describe('GameBoardComponent', () => {
   });
 
   it('Expect board preloaded with returned backend values', () => {
-    const board = initialBoard.map(b => { return b.position === 2? new GameBoard('X', 2): b});
+    const board = initialBoard.map(b => { return b.position === 2? new GameBox('X', 2): b});
     spyOn(service, 'getBoard').and.returnValue(of(board));
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -74,27 +74,27 @@ describe('GameBoardComponent', () => {
     box2.click();
     await fixture.detectChanges();
 
-    expect(boxClickSpy).toHaveBeenCalledWith(new GameBoard('', 2));
+    expect(boxClickSpy).toHaveBeenCalledWith(new GameBox('', 2));
   });
 
 
   it('click calls updateBoard service method onclick', async() => {
 
-    const board = initialBoard.map(b => { return b.position === 2? new GameBoard('X', 2): b});
-    const expected = board.map(b => { return b.position === 3? new GameBoard('O', 3): b});
+    const board = initialBoard.map(b => { return b.position === 2? new GameBox('X', 2): b});
+    const expected = board.map(b => { return b.position === 3? new GameBox('O', 3): b});
     spyOn(service, 'getBoard').and.returnValue(of(board));
     component = fixture.componentInstance;
     await fixture.detectChanges();
 
     const serviceUpdateSpy = spyOn(service, 'updateBoard').and.returnValue(of(expected));
 
-    component.click(new GameBoard('', 3));
-    expect(serviceUpdateSpy).toHaveBeenCalledWith(new GameBoard('O', 3));
+    component.click(new GameBox('', 3));
+    expect(serviceUpdateSpy).toHaveBeenCalledWith(new GameBox('O', 3));
   });
 
 
   it('On reset click resets the game', async() => {
-    const board = initialBoard.map(b => { return b.position === 2? new GameBoard('X', 2): b});
+    const board = initialBoard.map(b => { return b.position === 2? new GameBox('X', 2): b});
     spyOn(service, 'getBoard').and.returnValue(of(board));
 
     component = fixture.componentInstance;
@@ -109,7 +109,7 @@ describe('GameBoardComponent', () => {
   });
 
   it('reset() method calls service method reset', () => {
-    const board = initialBoard.map(b => { return b.position === 2? new GameBoard('X', 2): b});
+    const board = initialBoard.map(b => { return b.position === 2? new GameBox('X', 2): b});
     spyOn(service, 'getBoard').and.returnValue(of(board));
     const resetServiceSpy = spyOn(service, 'reset').and.returnValue(of(initialBoard));
     component = fixture.componentInstance;
@@ -121,15 +121,15 @@ describe('GameBoardComponent', () => {
   });
 
   it('Displays drawn game ', () => {
-    const board = [new GameBoard("O", 1),
-                    new GameBoard("X", 2),
-                    new GameBoard("X", 3),
-                    new GameBoard("X", 4),
-                    new GameBoard("X", 5),
-                    new GameBoard("O", 6),
-                    new GameBoard("O", 7),
-                    new GameBoard("O", 8),
-                    new GameBoard("X", 9)];
+    const board = [new GameBox("O", 1),
+                    new GameBox("X", 2),
+                    new GameBox("X", 3),
+                    new GameBox("X", 4),
+                    new GameBox("X", 5),
+                    new GameBox("O", 6),
+                    new GameBox("O", 7),
+                    new GameBox("O", 8),
+                    new GameBox("X", 9)];
     spyOn(service, 'getBoard').and.returnValue(of(board));
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -140,15 +140,15 @@ describe('GameBoardComponent', () => {
   });
 
   it('Detects game win on load', () => {
-    const board = [new GameBoard("X", 1),
-      new GameBoard("X", 2),
-      new GameBoard("X", 3),
-      new GameBoard("O", 4),
-      new GameBoard("O", 5),
-      new GameBoard("", 6),
-      new GameBoard("", 7),
-      new GameBoard("", 8),
-      new GameBoard("", 9)];
+    const board = [new GameBox("X", 1),
+      new GameBox("X", 2),
+      new GameBox("X", 3),
+      new GameBox("O", 4),
+      new GameBox("O", 5),
+      new GameBox("", 6),
+      new GameBox("", 7),
+      new GameBox("", 8),
+      new GameBox("", 9)];
 
     spyOn(service, 'getBoard').and.returnValue(of(board));
     component = fixture.componentInstance;
@@ -163,22 +163,22 @@ describe('GameBoardComponent', () => {
 
 
   it('Detects game win on click', () => {
-    const board = [new GameBoard("X", 1),
-      new GameBoard("X", 2),
-      new GameBoard("", 3),
-      new GameBoard("O", 4),
-      new GameBoard("O", 5),
-      new GameBoard("", 6),
-      new GameBoard("", 7),
-      new GameBoard("", 8),
-      new GameBoard("", 9)];
+    const board = [new GameBox("X", 1),
+      new GameBox("X", 2),
+      new GameBox("", 3),
+      new GameBox("O", 4),
+      new GameBox("O", 5),
+      new GameBox("", 6),
+      new GameBox("", 7),
+      new GameBox("", 8),
+      new GameBox("", 9)];
 
     spyOn(service, 'getBoard').and.returnValue(of(board));
     component = fixture.componentInstance;
     fixture.detectChanges();
-    const expected = board.map(b => { return b.position === 3? new GameBoard('X', 3): b});
+    const expected = board.map(b => { return b.position === 3? new GameBox('X', 3): b});
     spyOn(service, 'updateBoard').and.returnValue(of(expected));
-    component.click(new GameBoard('', 3));
+    component.click(new GameBox('', 3));
 
     expect(component.gameOver).toBe(true);
     expect(component.winner).toBe(component.PLAYER_X);

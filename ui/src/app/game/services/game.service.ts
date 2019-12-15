@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {GameBoard} from "../game-board/game-board.component";
+import {GameBox} from "../game-board/game-board.component";
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +11,15 @@ export class GameService {
   constructor(private http: HttpClient) {
   }
 
-  getBoard(): Observable<GameBoard[]> {
-    return this.http.get<GameBoard[]>('game/boards')
+  getBoard(): Observable<GameBox[]> {
+    return this.http.get<GameBox[]>('game/boards')
   }
 
-  updateBoard(board: GameBoard | undefined): Observable<GameBoard[]> {
-    return this.http.put<GameBoard[]>('game/update', board);
+  updateBoard(board: GameBox | undefined): Observable<GameBox[]> {
+    return this.http.put<GameBox[]>('game/update', board);
   }
 
-  reset(): Observable<GameBoard[]> {
-    return this.http.post<GameBoard[]>('game/reset', []);
+  reset(): Observable<GameBox[]> {
+    return this.http.post<GameBox[]>('game/reset', []);
   }
 }

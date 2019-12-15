@@ -1,7 +1,7 @@
 package controller
 
 import controllers.TicTacToeController
-import models.Board
+import models.GameBox
 import org.scalatestplus.play._
 import org.scalatestplus.play.guice._
 import play.api.libs.json.Json
@@ -10,15 +10,15 @@ import play.api.test.Helpers._
 
 class TicTacToeControllerTest extends PlaySpec with GuiceOneAppPerTest with Injecting {
 
-  private val emptyBoard: Array[Board] = Array[Board](Board("", 1),
-                                                      Board("", 2),
-                                                      Board("", 3),
-                                                      Board("", 4),
-                                                      Board("", 5),
-                                                      Board("", 6),
-                                                      Board("", 7),
-                                                      Board("", 8),
-                                                      Board("", 9))
+  private val emptyBoard: Array[GameBox] = Array[GameBox](GameBox("", 1),
+                                                          GameBox("", 2),
+                                                          GameBox("", 3),
+                                                          GameBox("", 4),
+                                                          GameBox("", 5),
+                                                          GameBox("", 6),
+                                                          GameBox("", 7),
+                                                          GameBox("", 8),
+                                                          GameBox("", 9))
 
   "TicTacToeController GET" should {
 
@@ -34,10 +34,10 @@ class TicTacToeControllerTest extends PlaySpec with GuiceOneAppPerTest with Inje
 
     "Return current value if value updated" in {
       val controller = new TicTacToeController(stubControllerComponents())
-      controller.updateBoard().apply(FakeRequest(PUT, "game/update").withBody(Json.toJson(Board("X", 3))))
+      controller.updateBoard().apply(FakeRequest(PUT, "game/update").withBody(Json.toJson(GameBox("X", 3))))
       val home = controller.getBoard().apply(FakeRequest(GET, "game/boards"))
       val expected = emptyBoard.map(board => {
-        if (board.position == 3) Board("X", board.position) else board
+        if (board.position == 3) GameBox("X", board.position) else board
       })
       status(home) mustBe OK
       contentType(home) mustBe Some("application/json")
@@ -50,13 +50,13 @@ class TicTacToeControllerTest extends PlaySpec with GuiceOneAppPerTest with Inje
 
     "Update a box and return the List of Game Boards" in {
       val controller = new TicTacToeController(stubControllerComponents())
-      val home = controller.updateBoard().apply(FakeRequest(PUT, "game/update").withBody(Json.toJson(Board("X", 1))))
+      val home = controller.updateBoard().apply(FakeRequest(PUT, "game/update").withBody(Json.toJson(GameBox("X", 1))))
 
       status(home) mustBe OK
       contentType(home) mustBe Some("application/json")
       val resultJson = contentAsJson(home)
       resultJson.toString() mustBe Json.toJson(emptyBoard.map(board => {
-        if (board.position == 1) Board("X", board.position) else board
+        if (board.position == 1) GameBox("X", board.position) else board
       })).toString()
     }
 
@@ -69,7 +69,7 @@ class TicTacToeControllerTest extends PlaySpec with GuiceOneAppPerTest with Inje
 
     "Returns error if Board position is not between 1 -9" in {
       val controller = new TicTacToeController(stubControllerComponents())
-      val home = controller.updateBoard().apply(FakeRequest(PUT, "game/update").withBody(Json.toJson(Board("X", 10))))
+      val home = controller.updateBoard().apply(FakeRequest(PUT, "game/update").withBody(Json.toJson(GameBox("X", 10))))
 
       status(home) mustBe BAD_REQUEST
     }
