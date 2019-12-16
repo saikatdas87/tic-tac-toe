@@ -177,7 +177,7 @@ GET        /*file        controllers.FrontendController.assetOrDefault(file)
 
 ## Used below seed as base of this project
 
-* [Scala Play React Seed](https://github.com/yohangz/scala-play-react-seed)
+* [Scala Play Angular Seed](https://github.com/yohangz/scala-play-angular-seed)
 
 
 ## License
