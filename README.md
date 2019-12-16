@@ -174,11 +174,6 @@ GET        /*file        controllers.FrontendController.assetOrDefault(file)
 
 **Note: _On production build all the front end Angular build artifacts will be copied to the `public/ui` folder._**
 
-## Can be used to implement any front end/ui build!
-
-* Simply replace the ui directory with the build of your choice
-* Make output directory ROOT/public/
-* Implement a proxy to localhost:9000
 
 ## Used below seed as base of this project
 
